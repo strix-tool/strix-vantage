@@ -9,6 +9,8 @@
 [![Platform](https://img.shields.io/badge/platform-Linux%20(Kali)-blue.svg)](#install)
 [![Use](https://img.shields.io/badge/use-authorized%20only-critical.svg)](#-authorized-use-only)
 
+![Strix Vantage - screenshot](docs/screenshot.png)
+
 Part of the open-source **[Strix Advanced Tools](https://github.com/strix-tool)** suite.
 
 ## ⚠️ Authorized use only
