@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Vantage runtime output (never commit scan reports)
+recon_*.txt
+*.log
+
+# Downloaded tool data
+nuclei-templates/
+
+# Environments / editors / OS
+.venv/
+venv/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Installers & analysis artifacts (published via GitHub Releases; never committed)
+*.exe
+*.msi
+/*.spec
+bin/
+obj/
+.sonarqube/
+.scannerwork/

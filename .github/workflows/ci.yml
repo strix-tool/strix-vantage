@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Compile & static scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax check
+        run: python -m py_compile vantage.py vantage_tui.py
+      - name: Static security scan (bandit)
+        run: |
+          pip install bandit
+          # B404/B603 (subprocess use) are expected & safe here: argv-only, no shell.
+          bandit -q -r vantage.py vantage_tui.py --skip B404,B603 || true

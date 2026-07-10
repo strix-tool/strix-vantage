@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+permissions:
+  contents: write        # create the release
+  id-token: write        # Sigstore OIDC — required for build provenance
+  attestations: write    # write the attestation
+
+jobs:
+  release:
+    name: Publish script + checksums + provenance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax check
+        run: python -m py_compile vantage.py vantage_tui.py
+      - name: Checksums
+        run: sha256sum vantage.py vantage_tui.py ACKNOWLEDGEMENTS.md > SHA256SUMS
+      - name: Generate SBOM (SPDX)
+        uses: anchore/sbom-action@v0
+        with:
+          path: dist
+          format: spdx-json
+          output-file: dist/SBOM.spdx.json
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            vantage.py
+            vantage_tui.py
+      - name: Publish to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # Asset names must match the site's download link (data/downloads.js): vantage.py
+          files: |
+            vantage.py
+            vantage_tui.py
+            ACKNOWLEDGEMENTS.md
+            SHA256SUMS

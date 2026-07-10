@@ -1,0 +1,17 @@
+# Keep line endings deterministic across Windows/Linux checkouts.
+* text=auto eol=lf
+
+# Shell scripts, launchers and desktop entries MUST stay LF or they break on Linux.
+*.sh            text eol=lf
+*.desktop       text eol=lf
+linux/strix-*   text eol=lf
+
+# Windows scripts stay CRLF.
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+*.ps1           text eol=crlf
+
+# Binary assets — never normalize.
+*.png binary
+*.ico binary
+*.jpg binary
