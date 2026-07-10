@@ -1473,7 +1473,8 @@ def main():
             kat = run_katana(url, args.katana_headless)
             hak = run_hakrawler(url)
             entry["crawl"] = merge_urls(kat, hak)
-            log_result("crawl", f"{_num(entry['crawl'], r'total unique URLs:\s*(\d+)')} unique URL(s)")
+            _crawl_urls = _num(entry['crawl'], r'total unique URLs:\s*(\d+)')
+            log_result("crawl", f"{_crawl_urls} unique URL(s)")
 
         # parameterized URLs feed the param-based scanners (dalfox/dast/sqlmap)
         param_urls = _param_urls(entry.get("crawl", ""))
@@ -1514,7 +1515,8 @@ def main():
         if not args.skip_secrets:
             log_step("secret scan - emails / creds / tokens in source")
             entry["secrets"] = run_secretscan(url, entry.get("crawl", ""))
-            log_result("secrets", f"{_num(entry['secrets'], r'total findings:\s*(\d+)')} finding(s)")
+            _secret_n = _num(entry['secrets'], r'total findings:\s*(\d+)')
+            log_result("secrets", f"{_secret_n} finding(s)")
 
         results[url] = entry
 
