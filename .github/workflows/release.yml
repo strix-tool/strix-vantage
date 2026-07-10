@@ -25,9 +25,9 @@ jobs:
       - name: Generate SBOM (SPDX)
         uses: anchore/sbom-action@v0
         with:
-          path: dist
+          path: .
           format: spdx-json
-          output-file: dist/SBOM.spdx.json
+          output-file: SBOM.spdx.json
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v2
         with:
@@ -43,3 +43,5 @@ jobs:
             vantage_tui.py
             ACKNOWLEDGEMENTS.md
             SHA256SUMS
+
+            SBOM.spdx.json
